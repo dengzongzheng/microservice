@@ -10,7 +10,7 @@
     <module>gateway</module>
     <module>authority</module>
     <module>config-server</module>
-    <module>user-service</module>
+    <module>user</module>
     <module>eureka-server</module>
     <module>bus-server</module>
   </modules>
@@ -45,5 +45,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
 
 </project>

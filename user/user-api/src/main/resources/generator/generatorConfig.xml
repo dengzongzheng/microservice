@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="generator/generator.properties"/>
+
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="${mapper.plugin}">
+            <property name="mappers" value="${mapper.Mapper}"/>
+        </plugin>
+
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.user}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+
+
+        <!--【注意】如果同一工程中分多个模块，请手动修改包路径-->
+        <javaModelGenerator targetPackage="com.bzn.robot.service.system.model"
+                            targetProject="${targetJavaProject}"/>
+
+        <sqlMapGenerator targetPackage="mapper" targetProject="${targetResourcesProject}"/>
+
+        <javaClientGenerator targetPackage="com.bzn.robot.service.system.dao" targetProject="${targetJavaProject}"
+                             type="XMLMAPPER"/>
+
+      <!--<table tableName="question_stock">
+        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+      </table>
+
+      <table tableName="question_answer">
+        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+      </table>-->
+
+<!--      <table tableName="questionnaire">
+        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+      </table>-->
+
+<!--      <table tableName="questionnaire_answer">
+        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+      </table>-->
+
+      <!--<table tableName="questionnaire_record">-->
+        <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+      <!--</table>-->
+
+      <!--<table tableName="questionnaire_result">-->
+        <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+      <!--</table>-->
+
+      <!--<table tableName="questionnaire_user_answer">
+        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+      </table>-->
+<!--      <table tableName="questionnaire_channel">
+        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+      </table>-->
+
+
+        <!--<table tableName="health_channel">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--<table tableName="health_channel_organize">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--<table tableName="health_member">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--<table tableName="health_channel_organize_product">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--<table tableName="health_channel_organize_member_product">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--<table tableName="health_channel_product">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--<table tableName="health_policy">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--<table tableName="health_product">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+
+        <!--<table tableName="health_user">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+
+        <table tableName="health_activity">
+        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="health_activity_apply">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <!--<table tableName="health_admin_permit">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <table tableName="health_admin_platform">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <table tableName="health_admin_role">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <table tableName="health_admin_role_permit">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <table tableName="health_admin_user">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <table tableName="health_admin_user_belong">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <table tableName="health_admin_user_permit">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <table tableName="health_admin_user_role">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>-->
+
+    </context>
+</generatorConfiguration>

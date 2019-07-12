@@ -3,22 +3,23 @@ package com.dzz.user.service.config.common;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * 用户配置信息
+ * 公共配置
  *
  * @author dzz
  * @version 1.0.0
- * @since 2019年07月11 15:47
+ * @since 2019年07月12 13:45
  */
-@Component
-@Data
+@Configuration
 @RefreshScope
-public class UserConfig {
+@Data
+public class CommonConfig {
 
     @Value("${user.name}")
     private String userName;
+
 
     @Value("${user.password}")
     private String password;
