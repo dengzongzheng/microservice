@@ -12,6 +12,7 @@
     <module>config-server</module>
     <module>user-service</module>
     <module>eureka-server</module>
+    <module>bus-server</module>
   </modules>
   <packaging>pom</packaging>
 
