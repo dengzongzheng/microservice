@@ -4,7 +4,8 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-    <properties resource="generator/generator.properties"/>
+
+  <properties resource="generator/generator.properties"/>
 
     <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
         <property name="beginningDelimiter" value="`"/>
@@ -18,6 +19,10 @@
                         connectionURL="${jdbc.url}"
                         userId="${jdbc.user}"
                         password="${jdbc.password}">
+          <!--MySQL 8.x 需要指定服务器的时区-->
+          <property name="serverTimezone" value="UTC"/>
+          <!--MySQL 不支持 schema 或者 catalog 所以需要添加这个-->
+          <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 
 
@@ -40,9 +45,9 @@
       </table>
       -->
 
-      <table tableName="user" domainObjectName="User" enableCountByExample="false"
-        enableUpdateByExample="false" enableDeleteByExample="false"
-        enableSelectByExample="false" selectByExampleQueryId="false" />
+      <table tableName="user">
+        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+      </table>
 
 
 
