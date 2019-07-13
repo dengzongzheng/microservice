@@ -1,6 +1,7 @@
 package com.dzz.user.service.common.mapper;
 
 import tk.mybatis.mapper.common.Mapper;
+import tk.mybatis.mapper.common.MySqlMapper;
 
 /**
  * tk.mapper集成
@@ -8,4 +9,4 @@ import tk.mybatis.mapper.common.Mapper;
  * @version 1.0.0
  * @since 2019年07月12 15:13
  */
-public interface BaseMapper<T> extends Mapper<T> {}
+public interface BaseMapper<T> extends Mapper<T>, MySqlMapper<T> {}
