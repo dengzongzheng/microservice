@@ -18,8 +18,11 @@ public class Router {
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("path_route", r -> r.path("/api/user/**")
-                        .uri("http://localhost:7001"))
+                .route("path_route", r -> r.path("/api/hello/**")
+                        .uri("lb://POLICY-SERVICE")
+                        .order(1)
+                        .id("policy-service-router"))
                 .build();
+
     }
 }
