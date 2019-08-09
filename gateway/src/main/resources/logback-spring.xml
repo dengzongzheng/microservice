@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <!--<include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+
+    <property name="application.name" value="gateway"></property>
+    <property name="log_dir" value="${app.logDir:-/data/logs/gateway}"/>
+
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] %logger{50}.%M\(%file:%line\) - %msg%n</pattern>-->
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
+    <appender name="appAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/${application.name}-app.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log_dir}/otherlogs/${application.name}-info-%d{yyyyMMdd}.%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] %logger{50}.%M\(%file:%line\) - %msg%n</pattern>-->
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="errorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/${application.name}-error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log_dir}/otherlogs/${application.name}-error-%d{yyyyMMdd}.%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] %logger{50}.%M\(%file:%line\) - %msg%n</pattern>-->
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+        <!-- deny all events with a level below WARN, that is TRACE, DEBUG, and INFO -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="consoleAppender"/>
+        <appender-ref ref="appAppender"/>
+        <appender-ref ref="errorAppender"/>
+    </root>
+
+    <logger name="org.springframework" level="INFO"/>
+
+    <!-- 处理swagger的bug AbstractSerializableParameter，参考：https://blog.csdn.net/z_k_h/article/details/81875828 -->
+    <logger name="io.swagger.models.parameters.AbstractSerializableParameter" level="error"/>
+
+    <springProfile name="local,dev,test,uat">
+        <logger name="com.baozhunniu" level="DEBUG"/>
+        <logger name="com.bzn" level="DEBUG"/>
+    </springProfile>
+
+    <springProfile name="prod">
+        <logger name="com.baozhunniu" level="INFO"/>
+        <logger name="com.bzn" level="INFO"/>
+    </springProfile>
+
+</configuration>

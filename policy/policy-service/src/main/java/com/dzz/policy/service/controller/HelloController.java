@@ -5,6 +5,7 @@ import com.dzz.policy.service.domain.dao.PolicyMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,11 +34,12 @@ public class HelloController extends BaseController{
     @GetMapping(HelloUrlConstants.SAY_HELLO)
     @ApiOperation(value = "say hello接口", notes = "say hello接口")
     @ApiImplicitParam(name = "name", value = "姓名", required = true, dataType = "String", paramType = "query")
-    public ResponseEntity<?> sayHello(String name) {
+    public ResponseEntity<?> sayHello(String name) throws InterruptedException {
 
         policyMapper.selectAll().forEach(s->{
             System.out.println(s.getPolicyNo());
         });
+        TimeUnit.SECONDS.sleep(3);
         return ResponseEntity.ok(name + " hello");
     }
 }
