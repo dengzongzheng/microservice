@@ -1,8 +1,7 @@
 package com.dzz.authority.config;
 
-import java.util.Collections;
+import com.google.common.collect.Lists;
 import java.util.List;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -46,7 +45,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return user;
     }
 
-    private List<SimpleGrantedAuthority> getAuthority() {
-        return Collections.emptyList();
+    private List<Authority> getAuthority() {
+
+        return Lists.newArrayList(new Authority("/api/hello"));
     }
 }

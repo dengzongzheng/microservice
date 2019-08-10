@@ -1,11 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dzz.policy.service.domain.dao.PolicyMapper">
+
   <resultMap id="BaseResultMap" type="com.dzz.policy.service.domain.model.Policy">
-    <!--
-      WARNING - @mbg.generated
-    -->
+
     <result column="id" jdbcType="BIGINT" property="id" />
     <result column="policy_no" jdbcType="VARCHAR" property="policyNo" />
   </resultMap>
+
+  <resultMap id="PolicyDetailResultMap" type="com.dzz.policy.api.domain.bo.PolicyDetailBo">
+
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="policy_no" jdbcType="VARCHAR" property="policyNo" />
+  </resultMap>
+
+  <resultMap id="PolicyListResultMap" type="com.dzz.policy.api.domain.bo.PolicyListBo">
+
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="policy_no" jdbcType="VARCHAR" property="policyNo" />
+  </resultMap>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+
+    insert into policy (id,policy_no)
+
+    values
+    <foreach collection="batchData" item="param" separator="," index = "index">
+      (
+        #{param.id},#{param.policyNo}
+      )
+    </foreach>
+  </insert>
+
+  <select id="listPolicy" resultMap="PolicyListResultMap">
+
+    select i.id,i.policy_no from policy as i where i.policy_no=#{content}
+
+  </select>
+
+
+  <select id="detailPolicy" resultMap="PolicyDetailResultMap">
+
+    select i.id,i.policy_no from policy as i where i.policy_no=#{policyNo}
+
+  </select>
+
+
+
+
+
 </mapper>
