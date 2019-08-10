@@ -3,6 +3,7 @@ package com.dzz.authority.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -13,6 +14,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 /**
  * 授权
@@ -24,6 +26,9 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdapter {
+
+    @Autowired
+    private RedisConnectionFactory connectionFactory;
 
     /**
      * 注入AuthenticationManager ，密码模式用到
@@ -54,7 +59,7 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
                 .authenticationManager(authenticationManager)
-                .tokenStore(memoryTokenStore());
+                .tokenStore(redisTokenStore());
     }
 
     @Override
@@ -65,6 +70,11 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
     @Bean
     public TokenStore memoryTokenStore() {
         return new InMemoryTokenStore();
+    }
+
+    @Bean
+    public TokenStore redisTokenStore() {
+        return new RedisTokenStore(connectionFactory);
     }
 
     @Override
