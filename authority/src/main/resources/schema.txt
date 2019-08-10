@@ -1,0 +1,17 @@
+
+CREATE TABLE oauth_client_details
+(
+  client_id character varying(256) NOT NULL comment '客户端ID',
+  resource_ids character varying(256) comment '资源ID集合,多个资源时用逗号(,)分隔',
+  client_secret character varying(256) comment '客户端密匙',
+  scope character varying(256) comment '客户端申请的权限范围',
+  authorized_grant_types character varying(256) comment '客户端支持的grant_type',
+  web_server_redirect_uri character varying(256) comment '重定向URI',
+  authorities character varying(256) comment '客户端所拥有的Spring Security的权限值，多个用逗号(,)分隔',
+  access_token_validity integer comment '访问令牌有效时间值(单位:秒)',
+  refresh_token_validity integer comment '更新令牌有效时间值(单位:秒)',
+  additional_information character varying(4096) comment '预留字段',
+  autoapprove character varying(256) comment '用户是否自动Approval操作',
+  CONSTRAINT oauth_client_details_pkey PRIMARY KEY (client_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

@@ -1,5 +1,6 @@
 package com.dzz.gateway.routers;
 
+import com.dzz.gateway.config.CommonProperties;
 import com.dzz.gateway.filter.TimingFilter;
 import com.dzz.gateway.limiter.HostAddrKeyResolver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class Router {
     @Autowired
     private ReactiveRedisTemplate<String,String> redisTemplate;
 
+    @Autowired
+    private CommonProperties commonProperties;
+
 
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
@@ -36,6 +40,15 @@ public class Router {
                         .filter(new TimingFilter())
                         .order(1)
                         .id("policy-service-router"))
+                .route("authority_service_route", r -> r.path("/oauth/**")
+                        .filters(f -> f.hystrix(
+                                config -> config.setName("mycmd").setFallbackUri("forward:/fallback")))
+//                        .filters(f -> f.requestRateLimiter()
+//                                .configure(c -> c.setRateLimiter(getRedisRateLimiter())))
+                        .uri(commonProperties.getAuthorityUrl())
+                        .filter(new TimingFilter())
+                        .order(2)
+                        .id("authority-router"))
                 .build();
 
     }

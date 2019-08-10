@@ -1,5 +1,6 @@
 package com.dzz.authority.config;
 
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +36,9 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
      */
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private DataSource dataSource;
 
     /**
      * 对Jwt签名时，增加一个密钥
@@ -79,14 +83,15 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
-                .withClient("clientapp")
-                .secret("123")
-                .scopes("read")
-                //设置支持[密码模式、授权码模式、token刷新]
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token")
-                .and()
-                .withClient("clientapp2").secret("123").scopes("read");
-
+//        clients.inMemory()
+//                .withClient("policy")
+//                .secret("123456")
+//                .scopes("read", "write")
+//                //设置支持[密码模式、授权码模式、token刷新]
+//                .authorizedGrantTypes("password", "authorization_code", "refresh_token")
+//                .accessTokenValiditySeconds(300)
+//                .refreshTokenValiditySeconds(600);
+        clients.jdbc(dataSource);
     }
+
 }
