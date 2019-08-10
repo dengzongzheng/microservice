@@ -3,6 +3,7 @@ package com.dzz.util.response;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import lombok.Data;
 
 /**
  * 返回实体封装
@@ -13,6 +14,7 @@ import java.io.Serializable;
  */
 @ApiModel(description = "数据返回统一封装")
 @SuppressWarnings("unchecked")
+@Data
 public class ResponsePack<E> implements Serializable {
 
     private static final long serialVersionUID = 802338676225884680L;

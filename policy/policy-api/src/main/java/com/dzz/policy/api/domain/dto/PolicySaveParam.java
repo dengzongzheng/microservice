@@ -13,11 +13,11 @@ import lombok.Data;
  * @since 2019年08月09 21:44
  */
 @Data
-@ApiModel(description = "数据返回统一封装")
+@ApiModel(description = "保存Policy Param")
 public class PolicySaveParam implements Serializable {
 
     private static final long serialVersionUID = 1187329096714882368L;
 
-    @ApiModelProperty(value = "标志code 1:成功、2:失败")
+    @ApiModelProperty(value = "保单号")
     private String policyNo;
 }
