@@ -62,6 +62,7 @@ public class DemoController extends BaseController{
      */
     @PostMapping(DemoService.SAVE_POLICY_URL)
     @ApiOperation(value = "保存policy接口", notes = "保存policy")
+    @ApiImplicitParam(name = "saveParam", value = "保存policy实体类参数", required = true, dataType = "PolicySaveParam")
     @ApiResponse(response = ResponsePack.class,code = 1,  message = "接口调用成功")
     public ResponsePack<Boolean> savePolicy(@RequestBody @Validated PolicySaveParam saveParam,
             BindingResult bindingResult) {
@@ -77,6 +78,7 @@ public class DemoController extends BaseController{
      */
     @ApiOperation(value = "列表policy查询接口", notes = "列表policy查询")
     @PostMapping(DemoService.LIST_POLICY)
+    @ApiImplicitParam(name = "listParam", value = "列表policy查询参数", required = true, dataType = "PolicyListParam")
     @ApiResponse(response = ResponsePack.class,code = 1,  message = "接口调用成功")
     public ResponsePack<PageUtil<PolicyListBo>> listPolicy(@RequestBody @Validated PolicyListParam listParam,
             BindingResult bindingResult) {

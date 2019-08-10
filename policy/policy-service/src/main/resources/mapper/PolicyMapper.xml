@@ -34,7 +34,11 @@
 
   <select id="listPolicy" resultMap="PolicyListResultMap">
 
-    select i.id,i.policy_no from policy as i where i.policy_no=#{content}
+    select i.id,i.policy_no from policy as i where 1=1
+
+    <if test="param.content!=null and param.content !=''">
+      and i.policy_no = #{param.content}
+    </if>
 
   </select>
 
