@@ -29,9 +29,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         String userName = "user";
         String userPass = "123456";
 
-        if (!userName.equals(username)) {
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
+//        if (!userName.equals(username)) {
+//            throw new UsernameNotFoundException("Invalid username or password.");
+//        }
 
         // this is another way of dealing with password encoding
         // password will be stored in bcrypt in this example

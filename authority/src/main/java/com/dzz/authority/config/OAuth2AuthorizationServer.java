@@ -1,6 +1,7 @@
 package com.dzz.authority.config;
 
 import javax.sql.DataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,7 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
  */
 @Configuration
 @EnableAuthorizationServer
+@Slf4j
 public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
@@ -61,6 +63,7 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        log.info("{}",authenticationManager);
         endpoints
                 .authenticationManager(authenticationManager)
                 .tokenStore(redisTokenStore());
@@ -83,14 +86,6 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-//        clients.inMemory()
-//                .withClient("policy")
-//                .secret("123456")
-//                .scopes("read", "write")
-//                //设置支持[密码模式、授权码模式、token刷新]
-//                .authorizedGrantTypes("password", "authorization_code", "refresh_token")
-//                .accessTokenValiditySeconds(300)
-//                .refreshTokenValiditySeconds(600);
         clients.jdbc(dataSource);
     }
 

@@ -27,16 +27,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeRequests().antMatchers("/authority/api/login").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/authority/api/login").permitAll()
                 .antMatchers(HttpMethod.OPTIONS)
                 .permitAll().and()
                 .httpBasic().disable();
+
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.userDetailsService(new UserDetailsServiceImpl());
+        auth.authenticationProvider(getCustomizeDaoAuthenticationProvider());
     }
 
     @Bean
@@ -63,5 +65,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(new UserDetailsServiceImpl());
+    }
+
+
+    @Bean
+    public CustomizeDaoAuthenticationProvider getCustomizeDaoAuthenticationProvider() {
+
+        CustomizeDaoAuthenticationProvider customizeDaoAuthenticationProvider = new CustomizeDaoAuthenticationProvider();
+        customizeDaoAuthenticationProvider.setUserDetailsService(new UserDetailsServiceImpl());
+        customizeDaoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        return customizeDaoAuthenticationProvider;
     }
 }
