@@ -14,6 +14,7 @@
     <module>bus-server</module>
     <module>policy</module>
     <module>util</module>
+    <module>turbine</module>
   </modules>
   <packaging>pom</packaging>
 

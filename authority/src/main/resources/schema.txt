@@ -15,3 +15,5 @@ CREATE TABLE oauth_client_details
   CONSTRAINT oauth_client_details_pkey PRIMARY KEY (client_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
