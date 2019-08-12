@@ -42,7 +42,11 @@
     </javaClientGenerator>
 
 
-    <table tableName="policy">
+    <table tableName="user">
+      <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+    </table>
+
+    <table tableName="user_authority">
       <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
     </table>
 

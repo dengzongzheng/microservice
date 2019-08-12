@@ -6,15 +6,15 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * Policy 列表查询 Param
+ * 用户列表查询 Param
  *
  * @author dzz
  * @version 1.0.0
  * @since 2019年08月09 21:45
  */
 @Data
-@ApiModel(description = "Policy列表查询条件")
-public class PolicyListParam implements Serializable {
+@ApiModel(description = "用户列表查询条件")
+public class UserListParam implements Serializable {
 
     private static final long serialVersionUID = 7858479680847918094L;
 

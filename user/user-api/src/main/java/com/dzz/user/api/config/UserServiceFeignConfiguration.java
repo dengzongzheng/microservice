@@ -1,4 +1,4 @@
-package com.dzz.user.api;
+package com.dzz.user.api.config;
 
 import feign.Request;
 import feign.Retryer;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @since 2019年08月09 22:04
  */
 @Component
-public class PolicyServiceFeignConfiguration {
+public class UserServiceFeignConfiguration {
 
     @Bean
     public Retryer feignRetryer() {/*feign client 失败不重试*/

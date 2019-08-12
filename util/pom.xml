@@ -26,6 +26,19 @@
       <version>1.18.4</version>
       <scope>provided</scope>
     </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>5.1.8.RELEASE</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>

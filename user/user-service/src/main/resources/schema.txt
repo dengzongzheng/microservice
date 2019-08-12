@@ -1,0 +1,18 @@
+create table user
+(
+	id BIGINT(64) not null comment '用户ID',
+	user_name varchar(45) not null comment '用户名',
+	password varchar(45) not null comment '密码',
+	constraint user_pk
+		primary key (id)
+);
+
+
+create table user_authority
+(
+	user_id BIGINT(64) not null comment '用户ID',
+	authority varchar(120) not null comment '用户权限'
+);
+
+create index user_authority_user_id_index
+	on user_authority (user_id);
