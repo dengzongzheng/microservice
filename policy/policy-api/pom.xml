@@ -44,12 +44,6 @@
       <version>9.7.0</version>
     </dependency>
 
-<!--    <dependency>-->
-<!--      <groupId>org.springframework.cloud</groupId>-->
-<!--      <artifactId>spring-cloud-openfeign</artifactId>-->
-<!--      <scope>provided</scope>-->
-<!--    </dependency>-->
-
   </dependencies>
 
   <build>
