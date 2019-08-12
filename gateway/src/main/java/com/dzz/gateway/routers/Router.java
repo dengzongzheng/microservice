@@ -42,7 +42,7 @@ public class Router {
                         .id("policy-service-router"))
                 .route("authority_service_route", r -> r.path("/oauth/**")
                         .filters(f -> f.hystrix(
-                                config -> config.setName("mycmd").setFallbackUri("forward:/fallback")))
+                                config -> config.setName("mycmd2").setFallbackUri("forward:/fallback")))
 //                        .filters(f -> f.requestRateLimiter()
 //                                .configure(c -> c.setRateLimiter(getRedisRateLimiter())))
                         .uri(commonProperties.getAuthorityUrl())
