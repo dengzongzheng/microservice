@@ -14,6 +14,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,9 @@ public class UserServiceImpl implements UserService {
     private BeanConvertService beanConvertService;
 
 
+    private PasswordEncoder passwordEncoder;
+
+
     @Autowired
     public void setUserMapper(UserMapper userMapper) {
         this.userMapper = userMapper;
@@ -52,11 +56,17 @@ public class UserServiceImpl implements UserService {
         this.beanConvertService = beanConvertService;
     }
 
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     @Override
     @Transactional(rollbackForClassName = {"Exception.class"})
     public ResponsePack<Boolean> saveUser(UserSaveParam saveParam) {
 
         User user = beanConvertService.convertToUser(saveParam);
+        user.setPassword(passwordEncoder.encode(saveParam.getPassword()));
         userMapper.insert(user);
         userAuthorityMapper
                 .batchInsert(beanConvertService.convertToUserAuthority(saveParam.getAuthorities(), user.getId()));

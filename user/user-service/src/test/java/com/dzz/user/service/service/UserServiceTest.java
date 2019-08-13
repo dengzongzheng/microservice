@@ -37,7 +37,7 @@ public class UserServiceTest {
     @Test
     public void saveUser() {
         UserSaveParam userSaveParam = new UserSaveParam();
-        userSaveParam.setUserName("admin");
+        userSaveParam.setUserName("admin1");
         userSaveParam.setPassword("123456");
         userSaveParam
                 .setAuthorities(Lists.newArrayList(new UserAuthorityParam("/test1"), new UserAuthorityParam("/test2")));

@@ -3,8 +3,7 @@ package com.dzz.authority.config;
 import com.dzz.user.api.domain.bo.UserDetailBo;
 import com.dzz.user.api.service.UserService;
 import com.dzz.util.response.ResponsePack;
-import com.google.common.collect.Lists;
-import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,40 +28,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-//        ResponsePack<UserDetailBo> responsePack = userService.detailUser(username);
-//        if(responsePack.checkFail() || null == responsePack.getData()) {
-//            throw new UsernameNotFoundException("Invalid username or password.");
-//        }
-//        UserDetailBo userDetailBo = responsePack.getData();
-//        return User.builder().username(userDetailBo.getUserName()).password(userDetailBo.getPassword())
-//                .authorities(userDetailBo.getAuthorities().stream().map(s -> new Authority(s.getAuthority())).collect(
-//                        Collectors.toList())).build();
         ResponsePack<UserDetailBo> responsePack = userService.detailUser(username);
-        return mockUser(username);
-    }
-
-    private UserDetails mockUser(String username) {
-        String userName = "user";
-        String userPass = "123456";
-
-//        if (!userName.equals(username)) {
-//            throw new UsernameNotFoundException("Invalid username or password.");
-//        }
-
-        // this is another way of dealing with password encoding
-        // password will be stored in bcrypt in this example
-        // you can also use a prefix, @see com.patternmatch.oauth2blog.config.AuthorizationServerConfig#CLIENT_SECRET
-        UserDetails user = User.builder()
-                .username(username)
-                .password(userPass)
-                .authorities(getAuthority())
-                .build();
-
-        return user;
-    }
-
-    private List<Authority> getAuthority() {
-
-        return Lists.newArrayList(new Authority("/api/hello"));
+        if(responsePack.checkFail() || null == responsePack.getData()) {
+            throw new UsernameNotFoundException("Invalid username or password.");
+        }
+        UserDetailBo userDetailBo = responsePack.getData();
+        return User.builder().username(userDetailBo.getUserName()).password(userDetailBo.getPassword())
+                .authorities(userDetailBo.getAuthorities().stream().map(s -> new Authority(s.getAuthority())).collect(
+                        Collectors.toList())).build();
     }
 }
