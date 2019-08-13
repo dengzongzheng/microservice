@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dzz.user.service.domain.dao.UserMapper">
+
+  <resultMap id="BaseResultMap" type="com.dzz.user.service.domain.model.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+  </resultMap>
+
+  <resultMap id="UserListResultMap" type="com.dzz.user.api.domain.bo.UserListBo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+  </resultMap>
+
+  <resultMap id="UserDetailResultMap" type="com.dzz.user.api.domain.bo.UserDetailBo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <collection property="authorities" ofType="com.dzz.user.api.domain.bo.UserAuthorityBo">
+      <result column="authority" jdbcType="VARCHAR" property="authority" />
+    </collection>
+  </resultMap>
+
+  <select id="listUser" resultMap="UserListResultMap">
+    select u.id, u.user_name, u.password from user as u
+  </select>
+
+  <select id="detailUser" resultMap="UserDetailResultMap">
+    select u.id, u.user_name, u.password, a.authority
+    from user as u
+           left join user_authority as a on u.id = a.user_id where u.user_name=#{userName}
+  </select>
+
+</mapper>

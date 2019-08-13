@@ -3,7 +3,9 @@ package com.dzz.user.api.domain.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 用户权限param
@@ -13,6 +15,8 @@ import lombok.Data;
  * @since 2019年08月12 17:48
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @ApiModel(description = "用户权限Param")
 public class UserAuthorityParam implements Serializable {
 

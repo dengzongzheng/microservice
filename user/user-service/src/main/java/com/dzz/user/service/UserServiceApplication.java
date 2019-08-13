@@ -13,7 +13,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  * @version 1.0.0
  * @since 2019年08月12 15:07
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.dzz")
 @EnableOAuth2Client
 @EnableEurekaClient
 @MapperScan("com.dzz.user.service.domain.dao")
