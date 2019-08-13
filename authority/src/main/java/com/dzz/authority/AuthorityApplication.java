@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * 授权服务启动类
@@ -17,6 +18,7 @@ import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboar
 @EnableEurekaClient
 @EnableCircuitBreaker
 @EnableHystrixDashboard
+@EnableFeignClients(basePackages = {"com.dzz.user.api.*"})
 public class AuthorityApplication {
 
     /**

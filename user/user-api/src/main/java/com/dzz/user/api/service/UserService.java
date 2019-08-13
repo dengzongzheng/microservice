@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @version 1.0.0
  * @since 2019年08月09 09:52
  */
-@FeignClient(name = "user-service", configuration = UserServiceFeignConfiguration.class)
+@FeignClient(name = "USER-SERVICE", configuration = UserServiceFeignConfiguration.class)
 public interface UserService {
 
     String BASE_URL = "/api/user";

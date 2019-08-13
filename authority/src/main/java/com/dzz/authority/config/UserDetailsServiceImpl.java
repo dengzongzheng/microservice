@@ -1,7 +1,9 @@
 package com.dzz.authority.config;
 
+import com.dzz.user.api.service.UserService;
 import com.google.common.collect.Lists;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,10 +20,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    @Autowired
+    private UserService userService;
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-
+//        ResponsePack<UserDetailBo> responsePack = userService.detailUser(username);
+//        if(responsePack.checkFail() || null == responsePack.getData()) {
+//            throw new UsernameNotFoundException("Invalid username or password.");
+//        }
+//        UserDetailBo userDetailBo = responsePack.getData();
+//        return User.builder().username(userDetailBo.getUserName()).password(userDetailBo.getPassword())
+//                .authorities(userDetailBo.getAuthorities().stream().map(s -> new Authority(s.getAuthority())).collect(
+//                        Collectors.toList())).build();
+//        ResponsePack<UserDetailBo> responsePack = userService.detailUser(username);
         return mockUser(username);
     }
 
