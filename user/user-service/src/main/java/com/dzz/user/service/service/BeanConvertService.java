@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,9 +25,16 @@ public class BeanConvertService {
 
     private IdService idService;
 
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     public void setIdService(IdService idService) {
         this.idService = idService;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -39,6 +47,7 @@ public class BeanConvertService {
         User user = new User();
         BeanUtils.copyProperties(saveParam, user);
         user.setId(idService.getId());
+        user.setPassword(passwordEncoder.encode(saveParam.getPassword()));
         return user;
     }
 
