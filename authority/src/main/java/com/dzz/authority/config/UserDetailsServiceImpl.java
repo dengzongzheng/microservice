@@ -1,6 +1,8 @@
 package com.dzz.authority.config;
 
+import com.dzz.user.api.domain.bo.UserDetailBo;
 import com.dzz.user.api.service.UserService;
+import com.dzz.util.response.ResponsePack;
 import com.google.common.collect.Lists;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //        return User.builder().username(userDetailBo.getUserName()).password(userDetailBo.getPassword())
 //                .authorities(userDetailBo.getAuthorities().stream().map(s -> new Authority(s.getAuthority())).collect(
 //                        Collectors.toList())).build();
-//        ResponsePack<UserDetailBo> responsePack = userService.detailUser(username);
+        ResponsePack<UserDetailBo> responsePack = userService.detailUser(username);
         return mockUser(username);
     }
 
