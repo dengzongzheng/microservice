@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @since 2019年08月09 09:52
  */
 @FeignClient(name = "policy-service", configuration = PolicyServiceFeignConfiguration.class)
-public interface DemoService {
+public interface PolicyService {
 
     String BASE_URL = "/api/policy";
 

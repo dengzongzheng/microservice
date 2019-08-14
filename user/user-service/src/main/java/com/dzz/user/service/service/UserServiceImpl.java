@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     private UserAuthorityMapper userAuthorityMapper;
 
 
-    private BeanConvertService beanConvertService;
+    private BeanToolsService beanToolsService;
 
 
     @Autowired
@@ -48,8 +48,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Autowired
-    public void setBeanConvertService(BeanConvertService beanConvertService) {
-        this.beanConvertService = beanConvertService;
+    public void setBeanConvertService(BeanToolsService beanConvertService) {
+        this.beanToolsService = beanConvertService;
     }
 
 
@@ -58,10 +58,10 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackForClassName = {"Exception.class"})
     public ResponsePack<Boolean> saveUser(UserSaveParam saveParam) {
 
-        User user = beanConvertService.convertToUser(saveParam);
+        User user = beanToolsService.convertToUser(saveParam);
         userMapper.insert(user);
         userAuthorityMapper
-                .batchInsert(beanConvertService.convertToUserAuthority(saveParam.getAuthorities(), user.getId()));
+                .batchInsert(beanToolsService.convertToUserAuthority(saveParam.getAuthorities(), user.getId()));
         return ResponsePack.ok(Boolean.TRUE);
     }
 

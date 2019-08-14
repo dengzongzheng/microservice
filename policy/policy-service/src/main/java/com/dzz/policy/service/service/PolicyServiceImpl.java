@@ -1,18 +1,20 @@
 package com.dzz.policy.service.service;
 
+import com.alibaba.fastjson.JSON;
 import com.dzz.policy.api.domain.bo.PolicyDetailBo;
 import com.dzz.policy.api.domain.bo.PolicyListBo;
 import com.dzz.policy.api.domain.dto.PolicyListParam;
 import com.dzz.policy.api.domain.dto.PolicySaveParam;
-import com.dzz.policy.api.service.DemoService;
+import com.dzz.policy.api.service.PolicyService;
+import com.dzz.policy.service.config.exception.BusinessException;
 import com.dzz.policy.service.domain.dao.PolicyMapper;
 import com.dzz.policy.service.domain.model.Policy;
-import com.dzz.policy.service.service.util.BeanTools;
 import com.dzz.util.page.PageUtil;
 import com.dzz.util.response.ResponsePack;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,16 +26,19 @@ import org.springframework.stereotype.Service;
  * @since 2019年08月09 22:10
  */
 @Service
-public class DemoServiceImpl implements DemoService {
-
-    private IdService idService;
+@Slf4j
+public class PolicyServiceImpl implements PolicyService {
 
     private PolicyMapper policyMapper;
 
     @Autowired
-    public void setIdService(IdService idService) {
-        this.idService = idService;
-    }
+    private BeanToolsService beanToolsService;
+
+    @Autowired
+    private SendToBusinessObserverImpl sendToBusinessObserver;
+
+    @Autowired
+    private SendToCentralObserverImpl sendToCentralObserver;
 
     @Autowired
     public void setPolicyMapper(PolicyMapper policyMapper) {
@@ -43,9 +48,7 @@ public class DemoServiceImpl implements DemoService {
     @Override
     public ResponsePack<Boolean> savePolicy(PolicySaveParam saveParam) {
 
-        Policy policy = BeanTools.convertToPolicy(saveParam);
-        policy.setId(idService.getId());
-
+        Policy policy = beanToolsService.convertToPolicy(saveParam);
         return ResponsePack.ok(policyMapper.insert(policy)>0);
     }
 
@@ -68,5 +71,37 @@ public class DemoServiceImpl implements DemoService {
     public ResponsePack<PolicyDetailBo> detailPolicy(String policyNo) {
 
         return ResponsePack.ok(policyMapper.detailPolicy(policyNo));
+    }
+
+    /**
+     * 调承保接口
+     * @param proposalNo proposalNo
+     * @return 结果
+     */
+    public ResponsePack<String> applyInsuranceService(String proposalNo) {
+
+        long startTime = System.currentTimeMillis();
+        ResponsePack<String> responsePack = sendInsurance(proposalNo);
+        log.info("发送承保耗时:{}秒，返回结果为:{}", (System.currentTimeMillis() - startTime) / 1000, JSON.toJSONString(
+                responsePack));
+        if(responsePack.checkFail() || null == responsePack.getData()) {
+            log.error("发送承保公司异常,{}", responsePack.getMessage());
+            throw new BusinessException("发送承保公司异常");
+        }
+        Observable observable = new Observable();
+        observable.addObserver(sendToBusinessObserver);
+        observable.addObserver(sendToCentralObserver);
+        observable.notifyObservers(proposalNo);
+        return responsePack;
+    }
+
+    /**
+     * 发送保险公司
+     * @param proposalNo proposalNo
+     * @return 结果
+     */
+    public ResponsePack<String> sendInsurance(String proposalNo) {
+
+        return ResponsePack.ok("aaaaaaaaaa");
     }
 }

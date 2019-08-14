@@ -4,7 +4,7 @@ import com.dzz.policy.api.domain.bo.PolicyDetailBo;
 import com.dzz.policy.api.domain.bo.PolicyListBo;
 import com.dzz.policy.api.domain.dto.PolicyListParam;
 import com.dzz.policy.api.domain.dto.PolicySaveParam;
-import com.dzz.policy.api.service.DemoService;
+import com.dzz.policy.api.service.PolicyService;
 import com.dzz.policy.service.controller.common.url.HelloUrlConstants;
 import com.dzz.util.page.PageUtil;
 import com.dzz.util.response.ResponsePack;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * demo controller
+ * policy controller
  *
  * @author dzz
  * @version 1.0.0
@@ -34,12 +34,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api(value = "示例代码API", tags = "示例代码API")
 @Slf4j
-public class DemoController extends BaseController{
+public class PolicyController extends BaseController{
 
-    private DemoService demoService;
+    private PolicyService demoService;
 
     @Autowired
-    public void setDemoService(DemoService demoService) {
+    public void setDemoService(PolicyService demoService) {
         this.demoService = demoService;
     }
 
@@ -60,7 +60,7 @@ public class DemoController extends BaseController{
      * @param saveParam 参数
      * @return 保存结果
      */
-    @PostMapping(DemoService.SAVE_POLICY_URL)
+    @PostMapping(PolicyService.SAVE_POLICY_URL)
     @ApiOperation(value = "保存policy接口", notes = "保存policy")
     @ApiImplicitParam(name = "saveParam", value = "保存policy实体类参数", required = true, dataType = "PolicySaveParam")
     @ApiResponse(response = ResponsePack.class,code = 1,  message = "接口调用成功")
@@ -77,7 +77,7 @@ public class DemoController extends BaseController{
      * @return 结果
      */
     @ApiOperation(value = "列表policy查询接口", notes = "列表policy查询")
-    @PostMapping(DemoService.LIST_POLICY)
+    @PostMapping(PolicyService.LIST_POLICY)
     @ApiImplicitParam(name = "listParam", value = "列表policy查询参数", required = true, dataType = "PolicyListParam")
     @ApiResponse(response = ResponsePack.class,code = 1,  message = "接口调用成功")
     public ResponsePack<PageUtil<PolicyListBo>> listPolicy(@RequestBody @Validated PolicyListParam listParam,
@@ -94,7 +94,7 @@ public class DemoController extends BaseController{
      */
     @ApiOperation(value = "policy 详情查询接口", notes = "policy 详情查询")
     @ApiImplicitParam(name = "policyNo", value = "保单号", required = true, dataType = "String", paramType = "query")
-    @GetMapping(DemoService.DETAIL_POLICY)
+    @GetMapping(PolicyService.DETAIL_POLICY)
     @ApiResponse(response = ResponsePack.class,code = 1,  message = "接口调用成功")
     public ResponsePack<PolicyDetailBo> detailPolicy(@RequestParam("policyNo") String policyNo) {
 
