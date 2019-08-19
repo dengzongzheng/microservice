@@ -3,16 +3,15 @@ package com.dzz.policy.service.controller;
 import com.dzz.policy.api.domain.bo.PolicyDetailBo;
 import com.dzz.policy.api.domain.bo.PolicyListBo;
 import com.dzz.policy.api.domain.dto.PolicyListParam;
-import com.dzz.policy.api.domain.dto.PolicySaveParam;
+import com.dzz.policy.api.domain.dto.PolicyCommonSaveParam;
 import com.dzz.policy.api.service.PolicyService;
-import com.dzz.policy.service.controller.common.url.HelloUrlConstants;
 import com.dzz.util.page.PageUtil;
 import com.dzz.util.response.ResponsePack;
+import com.dzz.util.validate.ValidateResultHandler;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
-import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,9 +31,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019年08月08 10:35
  */
 @RestController
-@Api(value = "示例代码API", tags = "示例代码API")
+@Api(value = "policy接口API", tags = "policy接口API")
 @Slf4j
-public class PolicyController extends BaseController{
+public class PolicyController {
 
     private PolicyService policyService;
 
@@ -43,16 +42,6 @@ public class PolicyController extends BaseController{
         this.policyService = policyService;
     }
 
-    @GetMapping(HelloUrlConstants.SAY_HELLO)
-    @ApiOperation(value = "say hello接口", notes = "say hello接口")
-    @ApiImplicitParam(name = "name", value = "姓名", required = true, dataType = "String", paramType = "query")
-    @PreAuthorize("hasAuthority('"+HelloUrlConstants.SAY_HELLO+"')")
-    @ApiResponse(response = ResponsePack.class,code = 1,  message = "接口调用成功")
-    public ResponsePack<?> sayHello(String name) throws InterruptedException {
-
-        TimeUnit.SECONDS.sleep(3);
-        return ResponsePack.ok(name + " hello");
-    }
 
     /**
      * 保存policy
@@ -64,10 +53,10 @@ public class PolicyController extends BaseController{
     @ApiOperation(value = "保存policy接口", notes = "保存policy")
     @ApiImplicitParam(name = "saveParam", value = "保存policy实体类参数", required = true, dataType = "PolicySaveParam")
     @ApiResponse(response = ResponsePack.class,code = 1,  message = "接口调用成功")
-    public ResponsePack<Boolean> savePolicy(@RequestBody @Validated PolicySaveParam saveParam,
+    public ResponsePack<Boolean> savePolicy(@RequestBody @Validated PolicyCommonSaveParam saveParam,
             BindingResult bindingResult) {
 
-        bindResultHandler(bindingResult);
+        ValidateResultHandler.bindResultHandler(bindingResult);
         return policyService.savePolicy(saveParam);
     }
 
@@ -83,7 +72,7 @@ public class PolicyController extends BaseController{
     public ResponsePack<PageUtil<PolicyListBo>> listPolicy(@RequestBody @Validated PolicyListParam listParam,
             BindingResult bindingResult) {
 
-        bindResultHandler(bindingResult);
+        ValidateResultHandler.bindResultHandler(bindingResult);
         return policyService.listPolicy(listParam);
     }
 
@@ -95,6 +84,7 @@ public class PolicyController extends BaseController{
     @ApiOperation(value = "policy 详情查询接口", notes = "policy 详情查询")
     @ApiImplicitParam(name = "policyNo", value = "保单号", required = true, dataType = "String", paramType = "query")
     @GetMapping(PolicyService.DETAIL_POLICY)
+    @PreAuthorize("hasAuthority('"+PolicyService.DETAIL_POLICY+"')")
     @ApiResponse(response = ResponsePack.class,code = 1,  message = "接口调用成功")
     public ResponsePack<PolicyDetailBo> detailPolicy(@RequestParam("policyNo") String policyNo) {
 

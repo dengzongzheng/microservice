@@ -1,4 +1,4 @@
-package com.dzz.policy.service.service;
+package com.dzz.policy.service.service.observer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class SendToBusinessObserverImpl extends Observer {
+public class SendToBusinessObserverImpl extends AbstractObserver {
 
     @Async("asyncExecutor")
     @Override

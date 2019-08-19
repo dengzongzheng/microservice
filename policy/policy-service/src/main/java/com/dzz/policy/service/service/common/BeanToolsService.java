@@ -1,6 +1,6 @@
-package com.dzz.policy.service.service;
+package com.dzz.policy.service.service.common;
 
-import com.dzz.policy.api.domain.dto.PolicySaveParam;
+import com.dzz.policy.api.domain.dto.PolicyCommonSaveParam;
 import com.dzz.policy.service.domain.model.Policy;
 import com.dzz.util.id.IdService;
 import org.springframework.beans.BeanUtils;
@@ -31,7 +31,7 @@ public class BeanToolsService {
      * @param saveParam param
      * @return policy 实体
      */
-    public Policy convertToPolicy(PolicySaveParam saveParam) {
+    public Policy convertToPolicy(PolicyCommonSaveParam saveParam) {
 
         Policy policy = new Policy();
         BeanUtils.copyProperties(saveParam, policy);

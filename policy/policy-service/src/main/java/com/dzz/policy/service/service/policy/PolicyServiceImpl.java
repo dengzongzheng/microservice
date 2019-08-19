@@ -1,14 +1,16 @@
-package com.dzz.policy.service.service;
+package com.dzz.policy.service.service.policy;
 
-import com.alibaba.fastjson.JSON;
 import com.dzz.policy.api.domain.bo.PolicyDetailBo;
 import com.dzz.policy.api.domain.bo.PolicyListBo;
+import com.dzz.policy.api.domain.dto.PolicyInsuranceDataUpdateParam;
 import com.dzz.policy.api.domain.dto.PolicyListParam;
-import com.dzz.policy.api.domain.dto.PolicySaveParam;
+import com.dzz.policy.api.domain.dto.PolicyPayDataUpdateParam;
+import com.dzz.policy.api.domain.dto.PolicyCommonSaveParam;
+import com.dzz.policy.api.domain.dto.PolicyStatusUpdateParam;
 import com.dzz.policy.api.service.PolicyService;
-import com.dzz.policy.service.config.exception.BusinessException;
 import com.dzz.policy.service.domain.dao.PolicyMapper;
 import com.dzz.policy.service.domain.model.Policy;
+import com.dzz.policy.service.service.common.BeanToolsService;
 import com.dzz.util.page.PageUtil;
 import com.dzz.util.response.ResponsePack;
 import com.github.pagehelper.PageHelper;
@@ -17,6 +19,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * DemoService 实现
@@ -27,6 +30,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Slf4j
+@SuppressWarnings("ALL")
 public class PolicyServiceImpl implements PolicyService {
 
     private PolicyMapper policyMapper;
@@ -34,11 +38,6 @@ public class PolicyServiceImpl implements PolicyService {
     @Autowired
     private BeanToolsService beanToolsService;
 
-    @Autowired
-    private SendToBusinessObserverImpl sendToBusinessObserver;
-
-    @Autowired
-    private SendToCentralObserverImpl sendToCentralObserver;
 
     @Autowired
     public void setPolicyMapper(PolicyMapper policyMapper) {
@@ -46,7 +45,8 @@ public class PolicyServiceImpl implements PolicyService {
     }
 
     @Override
-    public ResponsePack<Boolean> savePolicy(PolicySaveParam saveParam) {
+    @Transactional(rollbackFor = Exception.class)
+    public ResponsePack<Boolean> savePolicy(PolicyCommonSaveParam saveParam) {
 
         Policy policy = beanToolsService.convertToPolicy(saveParam);
         return ResponsePack.ok(policyMapper.insert(policy)>0);
@@ -73,37 +73,33 @@ public class PolicyServiceImpl implements PolicyService {
         return ResponsePack.ok(policyMapper.detailPolicy(policyNo));
     }
 
-    /**
-     * 调承保接口
-     * @param proposalNo proposalNo
-     * @return 结果
-     */
     @Override
-    public ResponsePack<String> applyInsuranceService(String proposalNo) {
-
-        long startTime = System.currentTimeMillis();
-        ResponsePack<String> responsePack = sendInsurance(proposalNo);
-        log.info("发送承保耗时:{}秒，返回结果为:{}", (System.currentTimeMillis() - startTime) / 1000, JSON.toJSONString(
-                responsePack));
-        if(responsePack.checkFail() || null == responsePack.getData()) {
-            log.error("发送承保公司异常,{}", responsePack.getMessage());
-            throw new BusinessException("发送承保公司异常");
-        }
-        Observable observable = new Observable();
-        observable.addObserver(sendToBusinessObserver);
-        observable.addObserver(sendToCentralObserver);
-        observable.notifyObservers(proposalNo);
-        log.info("返回处理结果为:{}", JSON.toJSONString(responsePack));
-        return responsePack;
+    public ResponsePack<Integer> getPolicyStatus(String proposalNo) {
+        return null;
     }
 
-    /**
-     * 发送保险公司
-     * @param proposalNo proposalNo
-     * @return 结果
-     */
-    public ResponsePack<String> sendInsurance(String proposalNo) {
-
-        return ResponsePack.ok("aaaaaaaaaa");
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponsePack<Boolean> updatePolicyStatus(PolicyStatusUpdateParam param) {
+        return null;
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResponsePack<Boolean> updatePolicyInsuranceData(PolicyInsuranceDataUpdateParam param) {
+        return null;
+    }
+
+    @Override
+    public ResponsePack<Boolean> updatePolicyPayData(PolicyPayDataUpdateParam param) {
+
+        return null;
+    }
+
+    @Override
+    public ResponsePack<String> getProposalInsuranceCode(String proposalNo) {
+
+        return ResponsePack.ok("cpic");
+    }
+
 }

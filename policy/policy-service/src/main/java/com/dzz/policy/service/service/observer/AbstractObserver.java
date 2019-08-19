@@ -1,4 +1,4 @@
-package com.dzz.policy.service.service;
+package com.dzz.policy.service.service.observer;
 
 /**
  * 保单观察者
@@ -7,7 +7,7 @@ package com.dzz.policy.service.service;
  * @version 1.0.0
  * @since 2019年08月14 16:54
  */
-public abstract class Observer {
+public abstract class AbstractObserver {
 
     /**
      * 保单观察应用实现

@@ -37,11 +37,7 @@ public class PolicyServiceImplTest extends TestCase {
 
     }
 
-    @Test
-    public void testApplyInsuranceService() {
 
-        log.info("返回结果为:{}", policyService.applyInsuranceService("P123456789"));
-    }
 
     @Test
     public void testSendInsurance() {

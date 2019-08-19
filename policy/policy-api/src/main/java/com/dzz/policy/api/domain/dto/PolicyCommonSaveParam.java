@@ -3,6 +3,7 @@ package com.dzz.policy.api.domain.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import java.util.List;
 import lombok.Data;
 
 /**
@@ -14,10 +15,18 @@ import lombok.Data;
  */
 @Data
 @ApiModel(description = "保存Policy Param")
-public class PolicySaveParam implements Serializable {
+public class PolicyCommonSaveParam implements Serializable {
 
     private static final long serialVersionUID = 1187329096714882368L;
 
     @ApiModelProperty(value = "保单号")
     private String policyNo;
+
+
+    @ApiModelProperty(value = "投保人")
+    private PolicyCommonHolderSaveParam holder;
+
+
+    @ApiModelProperty(value = "保被保险人")
+    private List<PolicyCommonSubjectSaveParam> subjects;
 }

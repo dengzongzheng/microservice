@@ -1,4 +1,4 @@
-package com.dzz.policy.service.service;
+package com.dzz.policy.service.service.observer;
 
 import java.util.Vector;
 
@@ -14,13 +14,13 @@ public class Observable {
     /**
      * 观察者容器存放
      */
-    private Vector<Observer> obVector = new Vector<>();
+    private Vector<AbstractObserver> obVector = new Vector<>();
 
     /**
      * 新增观察者
      * @param observer 观察者
      */
-    public void addObserver(Observer observer) {
+    public void addObserver(AbstractObserver observer) {
 
         this.obVector.add(observer);
     }
@@ -30,7 +30,7 @@ public class Observable {
      * 删除观察者
      * @param observer 观察者
      */
-    public void delObserver(Observer observer) {
+    public void delObserver(AbstractObserver observer) {
         this.obVector.remove(observer);
     }
 

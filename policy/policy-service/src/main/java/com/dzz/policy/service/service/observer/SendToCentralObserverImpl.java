@@ -1,23 +1,23 @@
-package com.dzz.policy.service.service;
+package com.dzz.policy.service.service.observer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
- * 支付成功
+ * 发送核心
  *
  * @author dzz
  * @version 1.0.0
- * @since 2019年08月14 17:10
+ * @since 2019年08月14 16:57
  */
 @Slf4j
 @Component
-public class PaySuccessObserverImpl extends Observer{
+public class SendToCentralObserverImpl extends AbstractObserver {
 
     @Async("asyncExecutor")
     @Override
     public void apply(String proposalNo) {
-        log.info("支付成功接收到发送通知,投保单号为:{}", proposalNo);
+        log.info("发送核心接收到发送通知,投保单号为:{}", proposalNo);
     }
 }

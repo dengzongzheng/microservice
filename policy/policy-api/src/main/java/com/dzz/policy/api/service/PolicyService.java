@@ -3,8 +3,11 @@ package com.dzz.policy.api.service;
 import com.dzz.policy.api.config.PolicyServiceFeignConfiguration;
 import com.dzz.policy.api.domain.bo.PolicyDetailBo;
 import com.dzz.policy.api.domain.bo.PolicyListBo;
+import com.dzz.policy.api.domain.dto.PolicyInsuranceDataUpdateParam;
 import com.dzz.policy.api.domain.dto.PolicyListParam;
-import com.dzz.policy.api.domain.dto.PolicySaveParam;
+import com.dzz.policy.api.domain.dto.PolicyPayDataUpdateParam;
+import com.dzz.policy.api.domain.dto.PolicyCommonSaveParam;
+import com.dzz.policy.api.domain.dto.PolicyStatusUpdateParam;
 import com.dzz.util.page.PageUtil;
 import com.dzz.util.response.ResponsePack;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -31,7 +34,12 @@ public interface PolicyService {
 
     String DETAIL_POLICY = BASE_URL + "/detailPolicy";
 
-    String APPLY_INSURANCE = BASE_URL + "/applyInsuranceService";
+    String GET_POLICY_STATUS = BASE_URL + "/getPolicyStatus";
+
+    String UPDATE_POLICY_STATUS = BASE_URL + "/updatePolicyStatus";
+
+
+    String UPDATE_POLICY_PAY_DATA = BASE_URL + "/updatePolicyPayData";
 
     /**
      * 保存policy
@@ -39,7 +47,7 @@ public interface PolicyService {
      * @return 保存结果
      */
     @PostMapping(SAVE_POLICY_URL)
-    ResponsePack<Boolean> savePolicy(@RequestBody PolicySaveParam saveParam);
+    ResponsePack<Boolean> savePolicy(@RequestBody PolicyCommonSaveParam saveParam);
 
     /**
      * 列表policy查询
@@ -60,10 +68,45 @@ public interface PolicyService {
 
 
     /**
-     * 调承保接口
-     * @param proposalNo proposalNo
-     * @return 结果
+     * 获取投保单状态
+     * @param proposalNo 投保单号
+     * @return 状态
      */
-    @GetMapping(APPLY_INSURANCE)
-    ResponsePack<String> applyInsuranceService(@RequestParam("proposalNo") String proposalNo);
+    @GetMapping(GET_POLICY_STATUS)
+    ResponsePack<Integer> getPolicyStatus(@RequestParam("proposalNo") String proposalNo);
+
+
+    /**
+     * 更新投保单状态
+     * @param param param
+     * @return 更新结果
+     */
+    @PostMapping(UPDATE_POLICY_STATUS)
+    ResponsePack<Boolean> updatePolicyStatus(@RequestBody PolicyStatusUpdateParam param);
+
+
+    /**
+     * 更新投保单状态
+     * @param param param
+     * @return 更新结果
+     */
+    @PostMapping(UPDATE_POLICY_STATUS)
+    ResponsePack<Boolean> updatePolicyInsuranceData(@RequestBody PolicyInsuranceDataUpdateParam param);
+
+
+    /**
+     * 更新投保单支付相关信息
+     * @param param param
+     * @return 更新结果
+     */
+    @PostMapping(UPDATE_POLICY_PAY_DATA)
+    ResponsePack<Boolean> updatePolicyPayData(@RequestBody PolicyPayDataUpdateParam param);
+
+
+    /**
+     * 取保险公司代码
+     * @param proposalNo 投保单号
+     * @return 保险公司代码
+     */
+    ResponsePack<String> getProposalInsuranceCode(@RequestParam("proposalNo") String proposalNo);
 }
