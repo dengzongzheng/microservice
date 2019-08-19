@@ -78,6 +78,7 @@ public class PolicyServiceImpl implements PolicyService {
      * @param proposalNo proposalNo
      * @return 结果
      */
+    @Override
     public ResponsePack<String> applyInsuranceService(String proposalNo) {
 
         long startTime = System.currentTimeMillis();
@@ -92,6 +93,7 @@ public class PolicyServiceImpl implements PolicyService {
         observable.addObserver(sendToBusinessObserver);
         observable.addObserver(sendToCentralObserver);
         observable.notifyObservers(proposalNo);
+        log.info("返回处理结果为:{}", JSON.toJSONString(responsePack));
         return responsePack;
     }
 

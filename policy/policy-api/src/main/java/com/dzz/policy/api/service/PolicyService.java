@@ -31,6 +31,8 @@ public interface PolicyService {
 
     String DETAIL_POLICY = BASE_URL + "/detailPolicy";
 
+    String APPLY_INSURANCE = BASE_URL + "/applyInsuranceService";
+
     /**
      * 保存policy
      * @param saveParam 参数
@@ -55,4 +57,13 @@ public interface PolicyService {
      */
     @GetMapping(DETAIL_POLICY)
     ResponsePack<PolicyDetailBo> detailPolicy(@RequestParam("policyNo") String policyNo);
+
+
+    /**
+     * 调承保接口
+     * @param proposalNo proposalNo
+     * @return 结果
+     */
+    @GetMapping(APPLY_INSURANCE)
+    ResponsePack<String> applyInsuranceService(@RequestParam("proposalNo") String proposalNo);
 }

@@ -1,6 +1,7 @@
 package com.dzz.policy.service.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,8 +13,9 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class SendToCentralObserverImpl implements Observer {
+public class SendToCentralObserverImpl extends Observer {
 
+    @Async("asyncExecutor")
     @Override
     public void apply(String proposalNo) {
         log.info("发送核心接收到发送通知,投保单号为:{}", proposalNo);

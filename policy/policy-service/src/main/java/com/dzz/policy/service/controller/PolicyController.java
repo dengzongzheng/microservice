@@ -36,11 +36,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class PolicyController extends BaseController{
 
-    private PolicyService demoService;
+    private PolicyService policyService;
 
     @Autowired
-    public void setDemoService(PolicyService demoService) {
-        this.demoService = demoService;
+    public void setDemoService(PolicyService policyService) {
+        this.policyService = policyService;
     }
 
     @GetMapping(HelloUrlConstants.SAY_HELLO)
@@ -68,7 +68,7 @@ public class PolicyController extends BaseController{
             BindingResult bindingResult) {
 
         bindResultHandler(bindingResult);
-        return demoService.savePolicy(saveParam);
+        return policyService.savePolicy(saveParam);
     }
 
     /**
@@ -84,7 +84,7 @@ public class PolicyController extends BaseController{
             BindingResult bindingResult) {
 
         bindResultHandler(bindingResult);
-        return demoService.listPolicy(listParam);
+        return policyService.listPolicy(listParam);
     }
 
     /**
@@ -98,6 +98,6 @@ public class PolicyController extends BaseController{
     @ApiResponse(response = ResponsePack.class,code = 1,  message = "接口调用成功")
     public ResponsePack<PolicyDetailBo> detailPolicy(@RequestParam("policyNo") String policyNo) {
 
-        return demoService.detailPolicy(policyNo);
+        return policyService.detailPolicy(policyNo);
     }
 }
