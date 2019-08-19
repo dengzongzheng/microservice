@@ -42,12 +42,12 @@ public interface PolicyService {
     String UPDATE_POLICY_PAY_DATA = BASE_URL + "/updatePolicyPayData";
 
     /**
-     * 保存policy
+     * 保存policy【不对外暴露】
      * @param saveParam 参数
      * @return 保存结果
      */
     @PostMapping(SAVE_POLICY_URL)
-    ResponsePack<Boolean> savePolicy(@RequestBody PolicyCommonSaveParam saveParam);
+    ResponsePack<String> savePolicy(@RequestBody PolicyCommonSaveParam saveParam);
 
     /**
      * 列表policy查询
@@ -77,7 +77,7 @@ public interface PolicyService {
 
 
     /**
-     * 更新投保单状态
+     * 更新投保单状态 【不对外暴露】
      * @param param param
      * @return 更新结果
      */
@@ -86,7 +86,7 @@ public interface PolicyService {
 
 
     /**
-     * 更新投保单状态
+     * 更新投保单状态【不对外暴露】
      * @param param param
      * @return 更新结果
      */
@@ -95,7 +95,7 @@ public interface PolicyService {
 
 
     /**
-     * 更新投保单支付相关信息
+     * 更新投保单支付相关信息【不对外暴露】
      * @param param param
      * @return 更新结果
      */
@@ -104,7 +104,7 @@ public interface PolicyService {
 
 
     /**
-     * 取保险公司代码
+     * 取保险公司代码【不对外暴露】
      * @param proposalNo 投保单号
      * @return 保险公司代码
      */

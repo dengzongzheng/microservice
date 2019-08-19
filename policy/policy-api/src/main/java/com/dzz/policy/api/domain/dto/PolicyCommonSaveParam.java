@@ -22,6 +22,8 @@ public class PolicyCommonSaveParam implements Serializable {
     @ApiModelProperty(value = "保单号")
     private String policyNo;
 
+    @ApiModelProperty(value = "保险公司投保单号")
+    private String insuranceProposalNo;
 
     @ApiModelProperty(value = "投保人")
     private PolicyCommonHolderSaveParam holder;

@@ -1,10 +1,11 @@
 package com.dzz.policy.service.service.insurance.impl;
 
+import com.dzz.policy.api.domain.dto.PolicyCommonSaveParam;
 import com.dzz.policy.api.service.PolicyService;
+import com.dzz.policy.service.service.insurance.SendInsuranceService;
 import com.dzz.policy.service.service.observer.Observable;
 import com.dzz.policy.service.service.observer.SendToBusinessObserverImpl;
 import com.dzz.policy.service.service.observer.SendToCentralObserverImpl;
-import com.dzz.policy.service.service.insurance.SendInsuranceService;
 import com.dzz.util.response.ResponsePack;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class CpicSendInsuranceServiceImpl implements SendInsuranceService {
     }
 
     @Override
-    public ResponsePack applyPrepareUnderwriting(String proposalNo) {
+    public ResponsePack applyPrepareUnderwriting(PolicyCommonSaveParam param) {
         return null;
     }
 

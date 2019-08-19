@@ -46,10 +46,11 @@ public class PolicyServiceImpl implements PolicyService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResponsePack<Boolean> savePolicy(PolicyCommonSaveParam saveParam) {
+    public ResponsePack<String> savePolicy(PolicyCommonSaveParam saveParam) {
 
         Policy policy = beanToolsService.convertToPolicy(saveParam);
-        return ResponsePack.ok(policyMapper.insert(policy)>0);
+        Integer count = policyMapper.insert(policy);
+        return count > 0 ? ResponsePack.ok(policy.getPolicyNo()) : ResponsePack.fail("处理失败请稍后再试");
     }
 
     @Override
@@ -93,7 +94,7 @@ public class PolicyServiceImpl implements PolicyService {
     @Override
     public ResponsePack<Boolean> updatePolicyPayData(PolicyPayDataUpdateParam param) {
 
-        return null;
+        return ResponsePack.ok(Boolean.TRUE);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.dzz.policy.service.service.observer;
 
+import com.dzz.policy.api.service.PolicyService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,13 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class SendToBusinessObserverImpl extends AbstractObserver {
+
+    private PolicyService policyService;
+
+    @Autowired
+    public void setPolicyService(PolicyService policyService) {
+        this.policyService = policyService;
+    }
 
     @Async("asyncExecutor")
     @Override

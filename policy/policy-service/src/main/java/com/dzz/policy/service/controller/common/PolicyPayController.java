@@ -1,4 +1,4 @@
-package com.dzz.policy.service.controller;
+package com.dzz.policy.service.controller.common;
 
 import com.dzz.policy.service.service.pay.PolicyPayService;
 import io.swagger.annotations.Api;

@@ -1,5 +1,6 @@
 package com.dzz.policy.service.service.insurance;
 
+import com.dzz.policy.api.domain.dto.PolicyCommonSaveParam;
 import com.dzz.util.response.ResponsePack;
 
 /**
@@ -19,10 +20,10 @@ public interface SendInsuranceService {
 
     /**
      * 调用核保
-     * @param proposalNo 投保单号
+     * @param param param
      * @return 核保结果
      */
-    ResponsePack applyPrepareUnderwriting(String proposalNo);
+    ResponsePack applyPrepareUnderwriting(PolicyCommonSaveParam param);
 
 
     /**

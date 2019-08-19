@@ -1,9 +1,8 @@
-package com.dzz.policy.service.controller;
+package com.dzz.policy.service.controller.common;
 
 import com.dzz.policy.api.domain.bo.PolicyDetailBo;
 import com.dzz.policy.api.domain.bo.PolicyListBo;
 import com.dzz.policy.api.domain.dto.PolicyListParam;
-import com.dzz.policy.api.domain.dto.PolicyCommonSaveParam;
 import com.dzz.policy.api.service.PolicyService;
 import com.dzz.util.page.PageUtil;
 import com.dzz.util.response.ResponsePack;
@@ -43,22 +42,6 @@ public class PolicyController {
     }
 
 
-    /**
-     * 保存policy
-     *
-     * @param saveParam 参数
-     * @return 保存结果
-     */
-    @PostMapping(PolicyService.SAVE_POLICY_URL)
-    @ApiOperation(value = "保存policy接口", notes = "保存policy")
-    @ApiImplicitParam(name = "saveParam", value = "保存policy实体类参数", required = true, dataType = "PolicySaveParam")
-    @ApiResponse(response = ResponsePack.class,code = 1,  message = "接口调用成功")
-    public ResponsePack<Boolean> savePolicy(@RequestBody @Validated PolicyCommonSaveParam saveParam,
-            BindingResult bindingResult) {
-
-        ValidateResultHandler.bindResultHandler(bindingResult);
-        return policyService.savePolicy(saveParam);
-    }
 
     /**
      * 列表policy查询
@@ -74,6 +57,22 @@ public class PolicyController {
 
         ValidateResultHandler.bindResultHandler(bindingResult);
         return policyService.listPolicy(listParam);
+    }
+
+
+    /**
+     * 获取投保单状态
+     *
+     * @param proposalNo 投保单号
+     * @return 状态
+     */
+    @ApiOperation(value = "获取投保单状态", notes = "获取投保单状态")
+    @GetMapping(PolicyService.GET_POLICY_STATUS)
+    @ApiImplicitParam(name = "proposalNo", value = "投保单号", required = true, dataType = "String")
+    @ApiResponse(response = ResponsePack.class,code = 1,  message = "接口调用成功")
+    public ResponsePack<Integer> getPolicyStatus(@RequestParam("proposalNo") String proposalNo) {
+
+        return policyService.getPolicyStatus(proposalNo);
     }
 
     /**

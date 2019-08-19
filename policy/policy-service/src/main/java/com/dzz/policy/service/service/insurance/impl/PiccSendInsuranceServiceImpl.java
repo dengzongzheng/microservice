@@ -1,5 +1,6 @@
 package com.dzz.policy.service.service.insurance.impl;
 
+import com.dzz.policy.api.domain.dto.PolicyCommonSaveParam;
 import com.dzz.policy.api.service.PolicyService;
 import com.dzz.policy.service.service.insurance.SendInsuranceService;
 import com.dzz.policy.service.service.observer.Observable;
@@ -40,7 +41,7 @@ public class PiccSendInsuranceServiceImpl implements SendInsuranceService {
     }
 
     @Override
-    public ResponsePack applyPrepareUnderwriting(String proposalNo) {
+    public ResponsePack applyPrepareUnderwriting(PolicyCommonSaveParam param) {
         return null;
     }
 
