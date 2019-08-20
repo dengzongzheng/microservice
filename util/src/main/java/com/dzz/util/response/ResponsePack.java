@@ -29,19 +29,14 @@ public class ResponsePack<E> implements Serializable {
     private E data;
 
 
-    public ResponsePack() {
-        this.code = 1;
-        this.message = "success";
-        this.data = null;
-    }
 
-    private ResponsePack(Integer code, String message, E data) {
+    private <U extends E>ResponsePack(Integer code, String message, E data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    public ResponsePack(E data) {
+    private  <U extends E>ResponsePack(E data) {
         this.code = 1;
         this.message = "success";
         this.data = data;
@@ -54,7 +49,7 @@ public class ResponsePack<E> implements Serializable {
      * @param data 数据
      * @return 结果
      */
-    public static<E> ResponsePack build(Integer code, String message, Object data) {
+    public static<E> ResponsePack<E> build(Integer code, String message, E data) {
         return new ResponsePack(code, message, data);
     }
 
@@ -63,15 +58,20 @@ public class ResponsePack<E> implements Serializable {
      * @param data 数据
      * @return 结果
      */
-    public static<E> ResponsePack ok(Object data) {
-        return new ResponsePack(data);
+    public static<E> ResponsePack<E> ok(E data) {
+
+        ResponsePack<E> responsePack = new ResponsePack<E>(data);
+        responsePack.setCode(1);
+        responsePack.setMessage("success");
+        responsePack.setData(data);
+        return responsePack;
     }
 
     /**
      * 构建成功的封装
      * @return 结果
      */
-    public static<E> ResponsePack ok() {
+    public static<E> ResponsePack<E> ok() {
         return new ResponsePack(null);
     }
 
@@ -81,7 +81,7 @@ public class ResponsePack<E> implements Serializable {
      * @param message 结果说明
      * @return 结果
      */
-    public static<E> ResponsePack build(Integer code, String message) {
+    public static<E> ResponsePack<E> build(Integer code, String message) {
 
         return new ResponsePack(code, message, null);
     }
@@ -92,9 +92,9 @@ public class ResponsePack<E> implements Serializable {
      * @param message 说明
      * @return 结果
      */
-    public static<E> ResponsePack fail(String message) {
+    public static<E> ResponsePack<E> fail(String message) {
 
-        return build(0, message);
+        return build(1, message, null);
     }
 
     /**
@@ -103,7 +103,7 @@ public class ResponsePack<E> implements Serializable {
      * @param data 数据
      * @return 结果
      */
-    public static<E> ResponsePack fail(String message, E data) {
+    public static<E> ResponsePack<E> fail(String message, E data) {
 
         return build(0, message, data);
     }
