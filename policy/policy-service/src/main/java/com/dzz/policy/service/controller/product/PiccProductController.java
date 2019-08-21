@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019年08月19 16:20
  */
 @RestController
-@Api(value = "PICC接口API", tags = "PICC接口API")
+@Api(value = "PICC接口API", tags = "PICC接口API", produces = "application/json")
 @Slf4j
 @SuppressWarnings("ALL")
 public class PiccProductController {
@@ -56,8 +57,11 @@ public class PiccProductController {
     @PostMapping(PiccProductService.APPLY_PREPARE_UNDERWRITING_URL)
     @ApiOperation(value = "PICC核保接口", notes = "PICC核保接口")
     @ApiImplicitParam(name = "param", value = "PICC核保接口参数", required = true, dataType = "PolicyCommonSaveParam")
-    @ApiResponse(response = ResponsePack.class, code = 1, message = "接口调用成功")
-    public ResponsePack applyPrepareUnderwriting(@RequestBody @Validated PolicyCommonSaveParam param,
+    @ApiResponses({
+            @ApiResponse(response = ResponsePack.class, code = 200, message = "接口调用成功"),
+            @ApiResponse(code = 401,message = "无权限")
+    })
+    public ResponsePack<String> applyPrepareUnderwriting(@RequestBody @Validated PolicyCommonSaveParam param,
             BindingResult bindingResult) {
 
         ValidateResultHandler.bindResultHandler(bindingResult);

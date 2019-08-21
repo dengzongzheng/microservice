@@ -20,7 +20,7 @@ public interface PiccProductService {
     String BASE_URL = "/api/product/picc/";
 
 
-    String APPLY_PREPARE_UNDERWRITING_URL = BASE_URL + " applyPrepareUnderwriting";
+    String APPLY_PREPARE_UNDERWRITING_URL = BASE_URL + "applyPrepareUnderwriting";
 
     /**
      * PICC 核保接口
